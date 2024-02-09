@@ -2,6 +2,13 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## First time start
+You will need to have node installed on your machine. You can download it from [here](https://nodejs.org/en/download/).
+`npm install`
+`npm i react-modal`
+`npm i -D react-router-dom`
+`npm install react-bootstrap bootstrap`
+
 ## Available Scripts
 
 In the project directory, you can run:

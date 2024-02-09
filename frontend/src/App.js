@@ -1,21 +1,37 @@
 import React from 'react';
-import Analytics from './components/Analytics';
-import Cards from './components/Cards';
-import Footer from './components/Footer';
-import Hero from './components/Hero';
-import Navbar from './components/Navbar';
-import Newsletter from './components/Newsletter';
-import Login from './components/login';
-import HouseGrid from './components/Housegrid';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Analytics from './pages/components/Analytics';
+import Cards from './pages/components/Cards';
+import Footer from './pages/components/Footer';
+import Hero from './pages/components/Hero';
+import Navbar from './pages/components/Navbar';
+import Newsletter from './pages/components/Newsletter';
+import Login from './pages/components/login';
+import HouseGrid from './pages/components/Housegrid';
+
+import Layout from './pages/Layout';
+import Index from './pages/Index';
+import NoPage from './pages/NoPage';
+
 
 function App() {
   return (
     <div>
-      <Navbar />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Index />} />
+            <Route path="*" element={<NoPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+
+
+      {/* <Navbar />
       <Hero />  
       <Cards />
-      <Footer />
-      </div>
+      <Footer /> */}
+    </div>
   );
 }
 
