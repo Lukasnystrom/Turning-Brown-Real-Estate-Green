@@ -8,8 +8,10 @@ export default class CreateAccount extends React.Component {
         this.state = {
             email: '',
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
+            noMatch: false
         }
+
     }
 
     style = {
@@ -30,8 +32,10 @@ export default class CreateAccount extends React.Component {
         const {name, value} = event.target;
         if (value !== this.state.password) {
             console.log('Passwords do not match');
+            this.setState({noMatch: true});
         } else {
             console.log('Passwords match');
+            this.setState({noMatch: false});
         }
     }
 
@@ -41,6 +45,7 @@ export default class CreateAccount extends React.Component {
     }
 
     render() {
+        const {noMatch} = this.state;
         return (
             <div className="flex">
                 <div className="w-1/2 h-screen bg-cover bg-center" style={{ backgroundImage: `url(${appartmentsImage})` }}></div>
@@ -51,6 +56,7 @@ export default class CreateAccount extends React.Component {
                             <input className={this.style.input} name="email" type="email" placeholder="Email" onChange={this.handleChange}/>
                             <input className={this.style.input} name="password" type="password" placeholder="Password" onChange={this.handleChange}/>
                             <input className={this.style.input} name="confirmPassword" type="password" placeholder="Confirm Password" onChange={this.handleDiffrentPassword}/>
+                            {noMatch && <div>Passwords do not match!</div> }
                             <button className={this.style.input} type="submit">Create Account</button>
                         </form>
                     </div>
