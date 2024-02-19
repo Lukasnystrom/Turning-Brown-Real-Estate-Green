@@ -56,7 +56,7 @@ export default class CreateAccount extends React.Component {
                             <input className={this.style.input} name="email" type="email" placeholder="Email" onChange={this.handleChange}/>
                             <input className={this.style.input} name="password" type="password" placeholder="Password" onChange={this.handleChange}/>
                             <input className={this.style.input} name="confirmPassword" type="password" placeholder="Confirm Password" onChange={this.handleDiffrentPassword}/>
-                            {noMatch && <div>Passwords do not match!</div> }
+                            {noMatch && <div className="text-red-500 italic">Passwords do not match!</div> }
                             <button className={this.style.input} type="submit">Create Account</button>
                         </form>
                     </div>
