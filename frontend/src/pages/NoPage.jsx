@@ -1,5 +1,6 @@
 import React from "react";
 import img from "../assets/404.jpg";
+import { Link } from 'react-router-dom';
 
 export default function NoPage() {
   return (
@@ -17,9 +18,7 @@ export default function NoPage() {
               <li className="text-sm md:text-l mx-12 mb-3">It may be a broken or outdated link.</li>
             </ul>
             <div className="flex mt-10 font-bold justify-center">
-              <button className="bg-[#192E43] text-white px-4 py-2 rounded-md mr-4">
-                Go Home
-              </button>
+              <Link to={"/"} className="bg-[#192E43] text-white px-4 py-2 rounded-md mr-4">Home</Link>
               <button className=" text-[#192E43] px-4 py-2 rounded-md border-2 border-[#192E43]">
                 Help
               </button>
