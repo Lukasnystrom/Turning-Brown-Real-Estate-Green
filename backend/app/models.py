@@ -75,7 +75,10 @@ class AssetType(models.Model):
 
 
 ### ASSET & MANAGEMENT PERFORMANCE ###
+    
+# Foreign key för bägge asset- och management performance är BasicBuildingDetails.
 class AssetPerformance(models.Model):
+    basic_building_details = models.ForeignKey(BasicBuildingDetails, on_delete=models.CASCADE)
     Hea01 = models.IntegerField() 
     Hea02 = models.IntegerField()
     Hea03 = models.IntegerField()
@@ -141,7 +144,50 @@ class AssetPerformance(models.Model):
     def __str__(self):
         return
     
+    # Returns the sum of credits of the Asset Perfomance category Health and Wellbeing. 
+    def HealthWellbeingTotal(self):
+        return self.Hea01 + self.Hea02 + self.Hea03 + self.Hea04 +self.Hea05 + self.Hea06 + self.Hea07 + self.Hea08 + self.Hea09 + self.Hea10 + self.Hea11 + self.Hea12 + self.Hea13
+    
+    # Returns the sum of credits of the Asset Perfomance category Energy. 
+    def EnergyTotal(self):
+        return self.Ene01 + self.Ene02 + self.Ene03 + self.Ene04 + self.Ene05 + self.Ene06 + self.Ene07 + self.Ene08 + self.Ene09 + self.Ene10 + self.Ene11 + self.Ene12 + self.Ene13 + self.Ene14 + self.Ene15 + self.Ene16 + self.Ene17 + self.Ene18
+
+    # Returns the sum of credits of the Asset Perfomance category Transport. 
+    def TransportTotal(self):
+        return self.Tra01 + self.Tra02 + self.Tra03 + self.Tra04  
+    
+    # Returns the sum of credits of the Asset Perfomance category Water. 
+    def WaterTotal(self):
+        return self.Wat01 + self.Wat02 + self.Wat03 + self.Wat04 + self.Wat05 + self.Wat06 + self.Wat07 + self.Wat08 + self.Wat09 + self.Wat10
+    
+    # Returns the sum of credits of the Asset Perfomance category Resources. 
+    def ResourcesTotal(self):
+        return self.Rsc01 + self.Rsc02 + self.Rsc03 + self.Rsc04
+    
+    # Returns the sum of credits of the Asset Perfomance category Resilience. 
+    def ResilienceTotal(self):
+        return self.Rsl01 + self.Rsl02 + self.Rsl03 + self.Rsl04 + self.Rsl05
+    
+    # Returns the sum of credits of the Asset Perfomance category Land usage and Ecology. 
+    def LandEcologyTotal(self):
+        return self.Lue01 + self.Lue02
+
+    # Returns the sum of credits of the Asset Perfomance category Pollution. 
+    def PollutionTotal(self):
+        return self.Pol01 + self.Pol02 + self.Pol03 + self.Pol04 + self.Pol05
+    
+    # Get the points for the specific question. 
+    # Example: Energy, question 1 is called using GetCreditsForSpecificQuestion(Ene01).
+    # Throws an example if the Question ID is invalid.
+    def GetCreditsForSpecificQuestion(questionID, self):
+        if questionID not in AssetPerformanceQuestionIDs:
+            raise Exception("Invalid Question ID")
+        else:
+            return self.questionID
+
+
 class ManagementPerformance(models.Model):
+    basic_building_details = models.ForeignKey(BasicBuildingDetails, on_delete=models.CASCADE)
     Hea14 = models.IntegerField()
     Hea15 = models.IntegerField()
     Hea16 = models.IntegerField()
@@ -175,3 +221,107 @@ class ManagementPerformance(models.Model):
 
     def __str__(self):
         return
+    
+
+
+
+
+
+
+
+### CONSTANTS ####
+    
+AssetPerformanceQuestionIDs = [ "Hea01",
+    "Hea02",
+    "Hea03",
+    "Hea04",
+    "Hea05",
+    "Hea06",
+    "Hea07",
+    "Hea08",
+    "Hea09",
+    "Hea10",
+    "Hea11",
+    "Hea12",
+    "Hea13",
+    "Ene01",
+    "Ene02",
+    "Ene03",
+    "Ene04",
+    "Ene05",
+    "Ene06",
+    "Ene07",
+    "Ene08",
+    "Ene09",
+    "Ene10",
+    "Ene11",
+    "Ene12",
+    "Ene13",
+    "Ene14",
+    "Ene15",
+    "Ene16",
+    "Ene17",
+    "Ene18",
+    "Tra01",
+    "Tra02",
+    "Tra03",
+    "Tra04",
+    "Wat01",
+    "Wat02",
+    "Wat03",
+    "Wat04",
+    "Wat05",
+    "Wat06",
+    "Wat07",
+    "Wat08",
+    "Wat09",
+    "Wat10",
+    "Rsc01",
+    "Rsc02",
+    "Rsc03",
+    "Rsc04",
+    "Rsl01",
+    "Rsl02",
+    "Rsl03",
+    "Rsl04",
+    "Rsl05",
+    "Lue01",
+    "Lue02",
+    "Pol01",
+    "Pol02",
+    "Pol03",
+    "Pol04",
+    "Pol05"
+]
+    
+ManagementPerformanceQuestionIDs = [ "Hea14",
+"Hea15",
+"Hea16",
+"Hea17",
+"Hea18",
+"Hea19",
+"Ene19",
+"Ene20",
+"Ene21",
+"Ene22",
+"Ene23",
+"Ene24",
+"Wat11",
+"Wat12",
+"Wat13",
+"Wat14",
+"Rsc05",
+"Rsc06",
+"Rsl06",
+"Rsl07",
+"Rsl08",
+"Rsl09",
+"Rsl10",
+"Lue03",
+"Lue04",
+"Pol06",
+"Pol07",
+"Pol08",
+"Pol09",
+"Pol10"
+]
