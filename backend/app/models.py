@@ -1,4 +1,5 @@
 from django.db import models
+#from django.conf import settings
 
 # Alla "models" är databas tables.
 
@@ -36,6 +37,9 @@ class BasicBuildingDetails(models.Model):
 
     def __str__(self):
         return self.name_of_asset
+    
+
+    
 
 class Occupancy(models.Model):
     basic_building_details = models.ForeignKey(BasicBuildingDetails, on_delete=models.CASCADE)
@@ -79,74 +83,74 @@ class AssetType(models.Model):
 # Foreign key för bägge asset- och management performance är BasicBuildingDetails.
 class AssetPerformance(models.Model):
     basic_building_details = models.ForeignKey(BasicBuildingDetails, on_delete=models.CASCADE)
-    Hea01 = models.IntegerField() 
-    Hea02 = models.IntegerField()
-    Hea03 = models.IntegerField()
-    Hea04 = models.IntegerField()
-    Hea05 = models.IntegerField()
-    Hea06 = models.IntegerField()
-    Hea07 = models.IntegerField()
-    Hea08 = models.IntegerField()
-    Hea09 = models.IntegerField()
-    Hea10 = models.IntegerField()
-    Hea11 = models.IntegerField()
-    Hea12 = models.IntegerField()
-    Hea13 = models.IntegerField()
-    Ene01 = models.IntegerField()
-    Ene02 = models.IntegerField()
-    Ene03 = models.IntegerField()
-    Ene04 = models.IntegerField()
-    Ene05 = models.IntegerField()
-    Ene06 = models.IntegerField()
-    Ene07 = models.IntegerField()
-    Ene08 = models.IntegerField()
-    Ene09 = models.IntegerField()
-    Ene10 = models.IntegerField()
-    Ene11 = models.IntegerField()
-    Ene12 = models.IntegerField()
-    Ene13 = models.IntegerField()
-    Ene14 = models.IntegerField()
-    Ene15 = models.IntegerField()
-    Ene16 = models.IntegerField()
-    Ene17 = models.IntegerField()
-    Ene18 = models.IntegerField()
-    Tra01 = models.IntegerField()
-    Tra02 = models.IntegerField()
-    Tra03 = models.IntegerField()
-    Tra04 = models.IntegerField()
-    Wat01 = models.IntegerField()
-    Wat02 = models.IntegerField()
-    Wat03 = models.IntegerField()
-    Wat04 = models.IntegerField()
-    Wat05 = models.IntegerField()
-    Wat06 = models.IntegerField()
-    Wat07 = models.IntegerField()
-    Wat08 = models.IntegerField()
-    Wat09 = models.IntegerField()
-    Wat10 = models.IntegerField()
-    Rsc01 = models.IntegerField()
-    Rsc02 = models.IntegerField()
-    Rsc03 = models.IntegerField()
-    Rsc04 = models.IntegerField()
-    Rsl01 = models.IntegerField()
-    Rsl02 = models.IntegerField()
-    Rsl03 = models.IntegerField()
-    Rsl04 = models.IntegerField()
-    Rsl05 = models.IntegerField()
-    Lue01 = models.IntegerField()
-    Lue02 = models.IntegerField()
-    Pol01 = models.IntegerField()
-    Pol02 = models.IntegerField()
-    Pol03 = models.IntegerField()
-    Pol04 = models.IntegerField()
-    Pol05 = models.IntegerField()
+    Hea01 = models.IntegerField(null=True) 
+    Hea02 = models.IntegerField(null=True)
+    Hea03 = models.IntegerField(null=True)
+    Hea04 = models.IntegerField(null=True)
+    Hea05 = models.IntegerField(null=True)
+    Hea06 = models.IntegerField(null=True)
+    Hea07 = models.IntegerField(null=True)
+    Hea08 = models.IntegerField(null=True)
+    Hea09 = models.IntegerField(null=True)
+    Hea10 = models.IntegerField(null=True)
+    Hea11 = models.IntegerField(null=True)
+    Hea12 = models.IntegerField(null=True)
+    Hea13 = models.IntegerField(null=True)
+    Ene01 = models.IntegerField(null=True)
+    Ene02 = models.IntegerField(null=True)
+    Ene03 = models.IntegerField(null=True)
+    Ene04 = models.IntegerField(null=True)
+    Ene05 = models.IntegerField(null=True)
+    Ene06 = models.IntegerField(null=True)
+    Ene07 = models.IntegerField(null=True)
+    Ene08 = models.IntegerField(null=True)
+    Ene09 = models.IntegerField(null=True)
+    Ene10 = models.IntegerField(null=True)
+    Ene11 = models.IntegerField(null=True)
+    Ene12 = models.IntegerField(null=True)
+    Ene13 = models.IntegerField(null=True)
+    Ene14 = models.IntegerField(null=True)
+    Ene15 = models.IntegerField(null=True)
+    Ene16 = models.IntegerField(null=True)
+    Ene17 = models.IntegerField(null=True)
+    Ene18 = models.IntegerField(null=True)
+    Tra01 = models.IntegerField(null=True)
+    Tra02 = models.IntegerField(null=True)
+    Tra03 = models.IntegerField(null=True)
+    Tra04 = models.IntegerField(null=True)
+    Wat01 = models.IntegerField(null=True)
+    Wat02 = models.IntegerField(null=True)
+    Wat03 = models.IntegerField(null=True)
+    Wat04 = models.IntegerField(null=True)
+    Wat05 = models.IntegerField(null=True)
+    Wat06 = models.IntegerField(null=True)
+    Wat07 = models.IntegerField(null=True)
+    Wat08 = models.IntegerField(null=True)
+    Wat09 = models.IntegerField(null=True)
+    Wat10 = models.IntegerField(null=True)
+    Rsc01 = models.IntegerField(null=True)
+    Rsc02 = models.IntegerField(null=True)
+    Rsc03 = models.IntegerField(null=True)
+    Rsc04 = models.IntegerField(null=True)
+    Rsl01 = models.IntegerField(null=True)
+    Rsl02 = models.IntegerField(null=True)
+    Rsl03 = models.IntegerField(null=True)
+    Rsl04 = models.IntegerField(null=True)
+    Rsl05 = models.IntegerField(null=True)
+    Lue01 = models.IntegerField(null=True)
+    Lue02 = models.IntegerField(null=True)
+    Pol01 = models.IntegerField(null=True)
+    Pol02 = models.IntegerField(null=True)
+    Pol03 = models.IntegerField(null=True)
+    Pol04 = models.IntegerField(null=True)
+    Pol05 = models.IntegerField(null=True)
 
     def __str__(self):
         return
     
     # Returns the sum of credits of the Asset Perfomance category Health and Wellbeing. 
     def HealthWellbeingTotal(self):
-        return self.Hea01 + self.Hea02 + self.Hea03 + self.Hea04 +self.Hea05 + self.Hea06 + self.Hea07 + self.Hea08 + self.Hea09 + self.Hea10 + self.Hea11 + self.Hea12 + self.Hea13
+        return self.Hea01 + self.Hea02 + self.Hea03 + self.Hea04 + self.Hea05 + self.Hea06 + self.Hea07 + self.Hea08 + self.Hea09 + self.Hea10 + self.Hea11 + self.Hea12 + self.Hea13
     
     # Returns the sum of credits of the Asset Perfomance category Energy. 
     def EnergyTotal(self):
@@ -179,11 +183,33 @@ class AssetPerformance(models.Model):
     # Get the points for the specific question. 
     # Example: Energy, question 1 is called using GetCreditsForSpecificQuestion(Ene01).
     # Throws an example if the Question ID is invalid.
-    def GetCreditsForSpecificQuestion(questionID, self):
+    def GetCreditsForSpecificQuestion(self, questionID):
         if questionID not in AssetPerformanceQuestionIDs:
             raise Exception("Invalid Question ID")
         else:
-            return self.questionID
+            return getattr(self, questionID, None)
+        
+
+    def update_performance_scores(self, updates):
+        """
+        Updates specific fields in the AssetPerformance instance based on provided dictionary.
+        
+        Args:
+        updates (dict): A dictionary where keys are field names (as strings) and values are the new values for those fields.
+        
+        Example:
+        updates = {'Hea01': 10, 'Ene02': 20}
+        """
+        for field, value in updates.items():
+            # Check if the field is a valid attribute of the model
+            if hasattr(self, field):
+                # Update the field value
+                setattr(self, field, value)
+            else:
+                raise ValueError(f"{field} is not a valid field name.")
+        # Save the instance to commit changes to the database
+        self.save()
+
 
 
 class ManagementPerformance(models.Model):
