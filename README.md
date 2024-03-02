@@ -1,7 +1,14 @@
 # Turning-Brown-Real-Estate-Green
 PVK project 
 
-## First time installation
+## Table of Contents
+1. [First time installation](#första-gångs-installation)
+   - [Node Installation](#node-installation)
+   - [Windows](#windows)
+   - [Mac/Linux](#maclinux)
+
+## Första gångs installation
+### Node installation
 För att installera och köra frontend för första gången, se till att du har Node installerat på din dator. Gör detta genom att köra följande kommando i terminalen:
 
 ```npm version```
