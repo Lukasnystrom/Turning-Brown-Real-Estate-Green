@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir logs
+
 # This script is used to install all the dependencies for the frontend
 
 {

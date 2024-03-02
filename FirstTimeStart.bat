@@ -1,5 +1,7 @@
 @echo off
 
+mkdir logs
+
 REM This script is used to install all the dependencies for the frontend
 (
     call cd frontend
