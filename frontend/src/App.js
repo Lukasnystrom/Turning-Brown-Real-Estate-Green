@@ -12,6 +12,7 @@ import HouseGrid from './pages/components/Housegrid';
 import Layout from './pages/Layout';
 import Index from './pages/Index';
 import NoPage from './pages/NoPage';
+import Home from './pages/Home';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Index />} />
+            <Route path="home" element={<Home user="David"/>} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>
