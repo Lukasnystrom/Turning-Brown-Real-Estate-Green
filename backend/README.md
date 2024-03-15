@@ -2,8 +2,7 @@
 
 Requirements:
 - Django
-- Python 
-- SQL
+- Python
 
 Run using:
 ```
