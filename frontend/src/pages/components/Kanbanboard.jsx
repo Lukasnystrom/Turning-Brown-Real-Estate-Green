@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DndContext, DragOverlay } from '@dnd-kit/core';
+import { DndContext, DragOverlay, useSensor, useSensors, PointerSensor, MouseSensor, TouchSensor, KeyboardSensor } from '@dnd-kit/core';
 
 import DroppableColumn from "./DroppableColumn";
 import House from "./House";
@@ -14,9 +14,25 @@ export default function Kanbanboard({ ready, setReady }) {
         container: "flex flex-row h-4/5 w-4/5 justify-center"
     };
 
+    const pointerSensor = useSensor(PointerSensor, {
+        activationConstraint: {
+          distance: 0.01
+        }
+      })
+      const mouseSensor = useSensor(MouseSensor)
+      const touchSensor = useSensor(TouchSensor)
+      const keyboardSensor = useSensor(KeyboardSensor)
+    
+      const sensors = useSensors(
+        mouseSensor,
+        touchSensor,
+        keyboardSensor,
+        pointerSensor
+      )
+
     return (
         <div className={styles.container}>
-            <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+            <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
                 <DroppableColumn id="1" key="1" name="Ready">
                     {ready.map((buidling) => (
                         <House key={buidling.address} address={buidling.address} id={buidling.address} current={1} />
@@ -48,7 +64,10 @@ export default function Kanbanboard({ ready, setReady }) {
     }
 
     function handleDragEnd(event) {
-        const over = event.over.id;
+        let over = null;
+        try {
+            over = event.over.id;
+        } catch {}
         const address = event.active.id;
         const start = event.active.data.current;
         console.log(event);
@@ -90,29 +109,6 @@ export default function Kanbanboard({ ready, setReady }) {
                 setInProgress((prevInProgress) => prevInProgress.filter((building) => building.address !== address));
             }
         }
-        // if (over === '1' && start !== 1) {
-        //     setReady((prevReady) => [...prevReady, name]);
-        //     if (start === 2) {
-        //         setInProgress((prevInProgress) => prevInProgress.filter((address) => address !== name));
-        //     } else if (start === 3) {
-        //         setDone((prevDone) => prevDone.filter((address) => address !== name));
-        //     }
-        // } else if (over === '2' && start !== 2) {
-        //     setInProgress((prevInProgress) => [...prevInProgress, name]);
-        //     if (start === 1) {
-        //         setReady((prevReady) => prevReady.filter((address) => address !== name));
-        //         console.log("Done");
-        //     } else if (start === 3) {
-        //         setDone((prevDone) => prevDone.filter((address) => address !== name));
-        //     }
-        // } else if (over === '3' && start !== 3) {
-        //     setDone((prevDone) => [...prevDone, name]);
-        //     if (start === 1) {
-        //         setReady((prevReady) => prevReady.filter((address) => address !== name));
-        //     } else if (start === 2) {
-        //         setInProgress((prevInProgress) => prevInProgress.filter((address) => address !== name));
-        //     }
-        // }
         setActiveId(null);
     }
 }
