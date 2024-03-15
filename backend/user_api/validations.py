@@ -8,20 +8,20 @@ def custom_validation(data):
     password = data['password'].strip()
     ##
     if not email or UserModel.objects.filter(email=email).exists():
-        raise ValidationError('Välj en annan e-post')
+        raise ValidationError('choose another email')
     ##
     if not password or len(password) < 8:
-        raise ValidationError('Välj ett annat lösenord med minst 8 tecken')
+        raise ValidationError('choose another password, min 8 characters')
     ##
     if not username:
-        raise ValidationError('Välj ett annat användarnamn')
+        raise ValidationError('choose another username')
     return data
 
 
 def validate_email(data):
     email = data['email'].strip()
     if not email:
-        raise ValidationError('En e-post adress krävs')
+        raise ValidationError('an email is needed')
     return True
 
 def validate_username(data):
@@ -33,5 +33,5 @@ def validate_username(data):
 def validate_password(data):
     password = data['password'].strip()
     if not password:
-        raise ValidationError('Ett lösenord krävs')
+        raise ValidationError('a password is needed')
     return True
