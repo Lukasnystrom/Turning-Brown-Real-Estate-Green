@@ -1,18 +1,14 @@
 import React, { useState } from "react";
-import { DndContext } from '@dnd-kit/core';
+import { DndContext, DragOverlay } from '@dnd-kit/core';
 
 import DroppableColumn from "./DroppableColumn";
 import House from "./House";
+import HouseDesign from "./HouseDesign";
 
-export default function Kanbanboard() {
-    const [ready, setReady] = useState(["Exempelgatan 1", "Exempelgatan 2", "Exempelgatan 3"]);
+export default function Kanbanboard({ ready, setReady }) {
     const [inProgress, setInProgress] = useState([]);
     const [done, setDone] = useState([]);
-    // const [parent, setParent] = useState('1');
-
-    // const draggableMarkup = (
-    //     <House address="Anundsvägen 32" />
-    // );
+    const [activeId, setActiveId] = useState(null);
 
     const styles = {
         container: "flex flex-row h-4/5 w-4/5 justify-center"
@@ -20,57 +16,103 @@ export default function Kanbanboard() {
 
     return (
         <div className={styles.container}>
-            <DndContext onDragEnd={handleDragEnd}>
+            <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
                 <DroppableColumn id="1" key="1" name="Ready">
-                    {ready.map((adress) => (
-                        <House key={adress} address={adress} id={adress} current={1} />
+                    {ready.map((buidling) => (
+                        <House key={buidling.address} address={buidling.address} id={buidling.address} current={1} />
                     ))}
                 </DroppableColumn>
 
                 <DroppableColumn id="2" key="2" name="In Progress">
-                    {inProgress.map((adress) => (
-                        <House key={adress} address={adress} id={adress} current={2} />
+                    {inProgress.map((building) => (
+                        <House key={building.address} address={building.address} id={building.address} current={2} />
                     ))}
                 </DroppableColumn>
 
                 <DroppableColumn id="3" key="3" name="Done">
-                    {done.map((adress) => (
-                        <House key={adress} address={adress} id={adress} current={3} />
+                    {done.map((building) => (
+                        <House key={building.address} address={building.address} id={building.address} current={3} />
                     ))}
                 </DroppableColumn>
+                <DragOverlay>
+                    {activeId ? (
+                        <HouseDesign address={activeId} />
+                    ) : null}
+                </DragOverlay>
             </DndContext>
         </div>
     );
 
+    function handleDragStart(event) {
+        setActiveId(event.active.id);
+    }
+
     function handleDragEnd(event) {
         const over = event.over.id;
-        const name = event.active.id;
+        const address = event.active.id;
         const start = event.active.data.current;
         console.log(event);
-        console.log(name, over, start);
+        console.log(address, over, start);
+
+        let building = {}
+
+        if (start === 1) {
+            building = ready.find((building) => building.address === address);
+        }
+        else if (start === 2) {
+            building = inProgress.find((building) => building.address === address);
+        }
+        else if (start === 3) {
+            building = done.find((building) => building.address === address);
+        } else {
+            console.log("Mega Error!");
+        }
 
         if (over === '1' && start !== 1) {
-            setReady((prevReady) => [...prevReady, name]);
+            setReady((prevReady) => [...prevReady, building]);
             if (start === 2) {
-                setInProgress((prevInProgress) => prevInProgress.filter((address) => address !== name));
+                setInProgress((prevInProgress) => prevInProgress.filter((building) => building.address !== address));
             } else if (start === 3) {
-                setDone((prevDone) => prevDone.filter((address) => address !== name));
+                setDone((prevDone) => prevDone.filter((building) => building.address !== address));
             }
         } else if (over === '2' && start !== 2) {
-            setInProgress((prevInProgress) => [...prevInProgress, name]);
+            setInProgress((prevInProgress) => [...prevInProgress, building]);
             if (start === 1) {
-                setReady((prevReady) => prevReady.filter((address) => address !== name));
-                console.log("Done");
+                setReady((prevReady) => prevReady.filter((building) => building.address !== address));
             } else if (start === 3) {
-                setDone((prevDone) => prevDone.filter((address) => address !== name));
+                setDone((prevDone) => prevDone.filter((building) => building.address !== address));
             }
         } else if (over === '3' && start !== 3) {
-            setDone((prevDone) => [...prevDone, name]);
+            setDone((prevDone) => [...prevDone, building]);
             if (start === 1) {
-                setReady((prevReady) => prevReady.filter((address) => address !== name));
+                setReady((prevReady) => prevReady.filter((building) => building.address !== address));
             } else if (start === 2) {
-                setInProgress((prevInProgress) => prevInProgress.filter((address) => address !== name));
+                setInProgress((prevInProgress) => prevInProgress.filter((building) => building.address !== address));
             }
         }
+        // if (over === '1' && start !== 1) {
+        //     setReady((prevReady) => [...prevReady, name]);
+        //     if (start === 2) {
+        //         setInProgress((prevInProgress) => prevInProgress.filter((address) => address !== name));
+        //     } else if (start === 3) {
+        //         setDone((prevDone) => prevDone.filter((address) => address !== name));
+        //     }
+        // } else if (over === '2' && start !== 2) {
+        //     setInProgress((prevInProgress) => [...prevInProgress, name]);
+        //     if (start === 1) {
+        //         setReady((prevReady) => prevReady.filter((address) => address !== name));
+        //         console.log("Done");
+        //     } else if (start === 3) {
+        //         setDone((prevDone) => prevDone.filter((address) => address !== name));
+        //     }
+        // } else if (over === '3' && start !== 3) {
+        //     setDone((prevDone) => [...prevDone, name]);
+        //     if (start === 1) {
+        //         setReady((prevReady) => prevReady.filter((address) => address !== name));
+        //     } else if (start === 2) {
+        //         setInProgress((prevInProgress) => prevInProgress.filter((address) => address !== name));
+        //     }
+        // }
+        setActiveId(null);
     }
 }
