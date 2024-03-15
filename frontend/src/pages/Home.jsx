@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { DndContext } from '@dnd-kit/core';
 
 import Kanbanboard from "./components/Kanbanboard";
 
@@ -8,7 +7,7 @@ export default function Home(props) {
     const [greeting, setGreeting] = useState("");
     const styles = {
         container: "flex flex-wrap justify-center h-screen bg-gray-200",
-        heading: "w-full mt-10 mb-4  text-5xl font-bold text-gray-700 text-center "
+        heading: "w-full mb-4 text-5xl font-bold text-gray-700 text-center "
     };
 
     useEffect(() => {
@@ -25,8 +24,15 @@ export default function Home(props) {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.heading}>{greeting} {props.user}!</h1>
-            <Kanbanboard />
+            <div className="flex flex-wrap w-1/6 h-full bg-white">
+                <button className="w-full h-12 m-4 bg-[#192E43] text-white italic rounded-md">Register New Building</button>
+            </div>
+            <div className="flex flex-wrap w-5/6 h-screen justify-center items-center bg-gray-200">
+                <div className="flex flex-wrap w-full justify-center items-center ">
+                    <h1 className={styles.heading}>{greeting} {props.user}!</h1>
+                </div>
+                <Kanbanboard />
+            </div>
         </div>
     );
 }
