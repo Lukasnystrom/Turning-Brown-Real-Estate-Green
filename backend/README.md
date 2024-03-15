@@ -3,6 +3,7 @@
 Requirements:
 - Django
 - Python
+- SQL
 
 Run using:
 ```
