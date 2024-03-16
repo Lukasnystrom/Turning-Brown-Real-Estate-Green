@@ -7,7 +7,7 @@ export default function DroppableHouse(props) {
     });
 
     const styles = {
-        column: "w-1/4 m-4 p-4 bg-gray-300 rounded-lg overflow-y-auto overflow-x-hidden",
+        column: "w-1/4 m-4 p-4 bg-gray-400/75 rounded-lg overflow-y-auto overflow-x-hidden",
         heading: "m-4 text-2xl font-bold italic text-center"
     }
 

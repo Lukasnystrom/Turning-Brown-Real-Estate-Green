@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import Kanbanboard from "./components/Kanbanboard";
+import DashboardBackdrop from "../assets/dashboard-backdrop.jpg";
 import {exempelBuilding1, exempelBuilding2, exempelBuilding3, exempelBuilding4, exempelBuilding5} from "./components/Example"
 
 export default function Home(props) {
@@ -16,8 +17,10 @@ export default function Home(props) {
     const [city, setCity] = useState("");
     const [zipCode, setZipCode] = useState("");
     const [country, setCountry] = useState("");
+    //Update this to get the ids from the backend
+    const [ids, setIds] = useState([1, 2, 3, 4, 5]);
     const styles = {
-        container: "flex flex-wrap justify-center h-screen bg-gray-200",
+        container: "flex flex-wrap justify-center h-screen bg-cover bg-center",
         heading: "w-full mb-4 text-5xl font-bold text-gray-700 text-center ",
         overlayHeader: "w-full mb-4 text-2xl font-bold text-gray-700 text-center",
         overlayForm: "flex flex-col w-full justify-center items-center",
@@ -29,7 +32,11 @@ export default function Home(props) {
     function registerBuilding() {
         setModalIsOpen(false);
         if (address !== "" && buildingName !== "" && city !== "" && zipCode !== "" && country !== "") {
+            //Change this to send the data to the backend and get the id from the backend
+            const id = ids[ids.length - 1] + 1;
+            setIds((prevIds) => [...prevIds, id]);
             setReady((prevReady) => [...prevReady, {
+                id: id,
                 name: buildingName,
                 address: address,
                 zipCode: zipCode,
@@ -52,7 +59,7 @@ export default function Home(props) {
     }, []);
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} style={{ backgroundImage: `url(${DashboardBackdrop})` }}>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={() => setModalIsOpen(false)}
@@ -90,10 +97,10 @@ export default function Home(props) {
                     </button>
                 </div>
             </Modal>
-            <div className="flex flex-wrap w-1/6 h-full bg-white">
+            <div className="flex flex-wrap w-1/6 h-ful bg-gray-700/50">
                 <button onClick={() => setModalIsOpen(true)} className="w-full h-12 m-4 bg-[#192E43] text-white italic rounded-md">Register New Building</button>
             </div>
-            <div className="flex flex-wrap w-5/6 h-screen justify-center items-center bg-gray-200">
+            <div className="flex flex-wrap w-5/6 h-screen justify-center items-center">
                 <div className="flex flex-wrap w-full justify-center items-center ">
                     <h1 className={styles.heading}>{greeting} {props.user}!</h1>
                 </div>

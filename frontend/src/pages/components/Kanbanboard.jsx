@@ -35,19 +35,19 @@ export default function Kanbanboard({ ready, setReady }) {
             <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
                 <DroppableColumn id="1" key="1" name="Ready">
                     {ready.map((buidling) => (
-                        <House key={buidling.address} address={buidling.address} id={buidling.address} current={1} />
+                        <House key={buidling.id} address={buidling.address} id={buidling.id} current={1} />
                     ))}
                 </DroppableColumn>
 
                 <DroppableColumn id="2" key="2" name="In Progress">
                     {inProgress.map((building) => (
-                        <House key={building.address} address={building.address} id={building.address} current={2} />
+                        <House key={building.id} address={building.address} id={building.id} current={2} />
                     ))}
                 </DroppableColumn>
 
                 <DroppableColumn id="3" key="3" name="Done">
                     {done.map((building) => (
-                        <House key={building.address} address={building.address} id={building.address} current={3} />
+                        <House key={building.id} address={building.address} id={building.id} current={3} />
                     ))}
                 </DroppableColumn>
                 <DragOverlay>
@@ -60,7 +60,9 @@ export default function Kanbanboard({ ready, setReady }) {
     );
 
     function handleDragStart(event) {
-        setActiveId(event.active.id);
+        const building = findBuilding(event);
+        
+        setActiveId(building.address);
     }
 
     function handleDragEnd(event) {
@@ -68,47 +70,50 @@ export default function Kanbanboard({ ready, setReady }) {
         try {
             over = event.over.id;
         } catch {}
-        const address = event.active.id;
+        const id = event.active.id;
         const start = event.active.data.current;
         console.log(event);
-        console.log(address, over, start);
+        console.log(id, over, start);
 
-        let building = {}
-
-        if (start === 1) {
-            building = ready.find((building) => building.address === address);
-        }
-        else if (start === 2) {
-            building = inProgress.find((building) => building.address === address);
-        }
-        else if (start === 3) {
-            building = done.find((building) => building.address === address);
-        } else {
-            console.log("Mega Error!");
-        }
+        const building = findBuilding(event);
 
         if (over === '1' && start !== 1) {
             setReady((prevReady) => [...prevReady, building]);
             if (start === 2) {
-                setInProgress((prevInProgress) => prevInProgress.filter((building) => building.address !== address));
+                setInProgress((prevInProgress) => prevInProgress.filter((building) => building.id !== id));
             } else if (start === 3) {
-                setDone((prevDone) => prevDone.filter((building) => building.address !== address));
+                setDone((prevDone) => prevDone.filter((building) => building.id !== id));
             }
         } else if (over === '2' && start !== 2) {
             setInProgress((prevInProgress) => [...prevInProgress, building]);
             if (start === 1) {
-                setReady((prevReady) => prevReady.filter((building) => building.address !== address));
+                setReady((prevReady) => prevReady.filter((building) => building.id !== id));
             } else if (start === 3) {
-                setDone((prevDone) => prevDone.filter((building) => building.address !== address));
+                setDone((prevDone) => prevDone.filter((building) => building.id !== id));
             }
         } else if (over === '3' && start !== 3) {
             setDone((prevDone) => [...prevDone, building]);
             if (start === 1) {
-                setReady((prevReady) => prevReady.filter((building) => building.address !== address));
+                setReady((prevReady) => prevReady.filter((building) => building.id !== id));
             } else if (start === 2) {
-                setInProgress((prevInProgress) => prevInProgress.filter((building) => building.address !== address));
+                setInProgress((prevInProgress) => prevInProgress.filter((building) => building.id !== id));
             }
         }
         setActiveId(null);
+    }
+    function findBuilding(event) {
+        let building = {};
+        if (event.active.data.current === 1) {
+            building = ready.find((building) => building.id === event.active.id);
+        }
+        else if (event.active.data.current === 2) {
+            building = inProgress.find((building) => building.id === event.active.id);
+        }
+        else if (event.active.data.current === 3) {
+            building = done.find((building) => building.id === event.active.id);
+        } else {
+            console.log("Mega Error!");
+        }
+        return building;
     }
 }
