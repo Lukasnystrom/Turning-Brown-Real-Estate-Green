@@ -13,6 +13,7 @@ import Layout from './pages/Layout';
 import Index from './pages/Index';
 import NoPage from './pages/NoPage';
 import Home from './pages/Home';
+import Buildings from './pages/Buildings';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Index />} />
             <Route path="home" element={<Home user="David"/>} />
+            <Route path='home/:id' element={<Buildings />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>
