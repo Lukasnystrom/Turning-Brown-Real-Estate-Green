@@ -6,7 +6,7 @@ import HouseDesign from "./HouseDesign";
 
 export default function House(props) {
     return (
-        <Link to={'/'}>
+        <Link to={`/home/:${props.id}`}>
             <DraggableHouse id={props.id} current={props.current}>
                 <HouseDesign address={props.address} />
             </DraggableHouse>

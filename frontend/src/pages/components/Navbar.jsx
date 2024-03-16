@@ -10,7 +10,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className='flex justify-between items-center h-24 w-screen mx-auto px-4 text-black bg-white border-b shadow-2xl'>
+    <div className='flex justify-between items-center h-24 mx-auto px-4 text-black bg-white border-b shadow-2xl'>
       <h1 className='ml-40 w-full text-3xl font-bold text-[#00df9a]'>Turning Brown Real Estate Green.</h1>
       <ul className='hidden mr-40 md:flex'>
         <li className='p-4'>
