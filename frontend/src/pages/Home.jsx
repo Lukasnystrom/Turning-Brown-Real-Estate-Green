@@ -6,11 +6,16 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import Kanbanboard from "./components/Kanbanboard";
 import DashboardBackdrop from "../assets/dashboard-backdrop.jpg";
 import {exempelBuilding1, exempelBuilding2, exempelBuilding3, exempelBuilding4, exempelBuilding5} from "./components/Example"
+import House from "./components/House";
+import HouseDesign from "./components/HouseDesign";
 
 export default function Home(props) {
     const greatings = ["Good Morning", "Good Afternoon", "Good Evening"];
     const [greeting, setGreeting] = useState("");
     const [ready, setReady] = useState([exempelBuilding1, exempelBuilding2, exempelBuilding3, exempelBuilding4, exempelBuilding5]);
+    const [inProgress, setInProgress] = useState([]);
+    const [done, setDone] = useState([]);
+    const [activeId, setActiveId] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [buildingName, setBuildingName] = useState("");
     const [address, setAddress] = useState("");
@@ -104,8 +109,64 @@ export default function Home(props) {
                 <div className="flex flex-wrap w-full justify-center items-center ">
                     <h1 className={styles.heading}>{greeting} {props.user}!</h1>
                 </div>
-                <Kanbanboard ready={ready} setReady={setReady} />
+                <Kanbanboard renderElement={House} renderDesign={HouseDesign} ready={ready} inProgress={inProgress} done={done} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} activeId={activeId} />
             </div>
         </div>
     );
+
+    function handleDragStart(event) {
+        const building = findBuilding(event);
+        
+        setActiveId(building.address);
+    }
+
+    function handleDragEnd(event) {
+        let over = null;
+        try {
+            over = event.over.id;
+        } catch {}
+        const id = event.active.id;
+        const start = event.active.data.current;
+
+        const building = findBuilding(event);
+
+        if (over === '1' && start !== 1) {
+            setReady((prevReady) => [...prevReady, building]);
+            if (start === 2) {
+                setInProgress((prevInProgress) => prevInProgress.filter((building) => building.id !== id));
+            } else if (start === 3) {
+                setDone((prevDone) => prevDone.filter((building) => building.id !== id));
+            }
+        } else if (over === '2' && start !== 2) {
+            setInProgress((prevInProgress) => [...prevInProgress, building]);
+            if (start === 1) {
+                setReady((prevReady) => prevReady.filter((building) => building.id !== id));
+            } else if (start === 3) {
+                setDone((prevDone) => prevDone.filter((building) => building.id !== id));
+            }
+        } else if (over === '3' && start !== 3) {
+            setDone((prevDone) => [...prevDone, building]);
+            if (start === 1) {
+                setReady((prevReady) => prevReady.filter((building) => building.id !== id));
+            } else if (start === 2) {
+                setInProgress((prevInProgress) => prevInProgress.filter((building) => building.id !== id));
+            }
+        }
+        setActiveId(null);
+    }
+    function findBuilding(event) {
+        let building = {};
+        if (event.active.data.current === 1) {
+            building = ready.find((building) => building.id === event.active.id);
+        }
+        else if (event.active.data.current === 2) {
+            building = inProgress.find((building) => building.id === event.active.id);
+        }
+        else if (event.active.data.current === 3) {
+            building = done.find((building) => building.id === event.active.id);
+        } else {
+            console.log("Mega Error!");
+        }
+        return building;
+    }
 }
