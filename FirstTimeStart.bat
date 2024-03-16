@@ -13,6 +13,8 @@ REM This script is used to install all the dependencies for the frontend
     call npm i -D react-router-dom
     echo Installing react-bootstrap...
     call npm install react-bootstrap bootstrap
+    echo Installing Drag And Drop...
+    call npm install @dnd-kit/core
     
 ) > .\logs\first-install.log 2>&1
 

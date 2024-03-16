@@ -17,6 +17,9 @@ mkdir logs
 
     echo "Installing react-bootstrap..."
     npm install react-bootstrap bootstrap
+
+    echo "Installing Drag and Drop..."
+    npm install @dnd-kit/core
 } > ./logs/first-install.log 2>&1
 
 npm start

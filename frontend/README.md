@@ -8,6 +8,7 @@ You will need to have node installed on your machine. You can download it from [
 `npm i react-modal`
 `npm i -D react-router-dom`
 `npm install react-bootstrap bootstrap`
+`npm install @dnd-kit/core`
 
 ## Available Scripts
 
