@@ -4,11 +4,15 @@ import { useParams } from "react-router-dom";
 import Kanbanboard from "./components/Kanbanboard";
 import BuildingImprovement from "./components/BuildingImprovement";
 import BuildingImprovementDesign from "./components/BuildingImprovementDesign";
+import Collapsible from "./components/Collapsible";
+import DownloadFile from "./components/DownloadFile";
+
+import DashboardBackdrop from "../assets/dashboard-backdrop.jpg";
 
 export default function Buildings() {
     const { id } = useParams();
 
-    const [ready, setReady] = useState([{ id: 1, name: 'Test' }]);
+    const [ready, setReady] = useState([{ id: 1, name: 'Byta Fönster' }]);
     const [inProgress, setInProgress] = useState([]);
     const [done, setDone] = useState([]);
     const [activeId, setActiveId] = useState(null);
@@ -16,9 +20,33 @@ export default function Buildings() {
 
 
     return (
-        <div className="h-screen w-full">
-            <h1>Building {id}</h1>
-            <Kanbanboard renderElement={BuildingImprovement} renderDesign={BuildingImprovementDesign} ready={ready} inProgress={inProgress} done={done} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} activeId={activeId}/>
+        <div className="flex flex-wrap h-screen w-full">
+
+            <div className="w-1/4 h-screen border-r-2 border-b-2 border-black">
+                <h2 className="p-4 text-2xl font-bold italic text-center bg-white">File Browser</h2>
+                <div className="w-full border-t-2 border-black" />
+                <div className="w-full h-full overflow-y-auto">
+                    <Collapsible name="Building Information">
+                        <Collapsible name="Sub Folder Building">
+                            <DownloadFile name="test.pdf" file="#" />
+                        </Collapsible>
+                    </Collapsible>
+                    <Collapsible name="Tax Information">
+                        <Collapsible name="Sub Folder Tax">
+                            <DownloadFile name="test.pdf" file="#" />
+                        </Collapsible>
+                    </Collapsible>
+                    <Collapsible name="Liabilities">
+                        <Collapsible name="Sub Folder Liabilities">
+                            <DownloadFile name="test.pdf" file="#" />
+                        </Collapsible>
+                    </Collapsible>
+                </div>
+            </div>
+            <div className="flex flex-wrap w-3/4 h-full justify-center items-center bg-cover bg-center" style={{ backgroundImage: `url(${DashboardBackdrop})` }}>
+                <h1 className="w-full m-5 text-3xl italic text-center">Building {id}</h1>
+                <Kanbanboard renderElement={BuildingImprovement} renderDesign={BuildingImprovementDesign} ready={ready} inProgress={inProgress} done={done} handleDragStart={handleDragStart} handleDragEnd={handleDragEnd} activeId={activeId} />
+            </div>
         </div>
     )
 
@@ -31,7 +59,7 @@ export default function Buildings() {
         let over = null;
         try {
             over = event.over.id;
-        } catch {}
+        } catch { }
         const id = event.active.id;
         const start = event.active.data.current;
 
