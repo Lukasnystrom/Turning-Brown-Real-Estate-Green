@@ -17,7 +17,7 @@ export default function Login() {
 
     return (
         <div>
-            <LoginComponent setEmail={setEmail} setPassword={setPassword} handleAccountCreation={handleAccountCreation} />
+            <LoginComponent label={"Login"} setEmail={setEmail} setPassword={setPassword} handleAccountCreation={handleAccountCreation} />
         </div>
     );
 }

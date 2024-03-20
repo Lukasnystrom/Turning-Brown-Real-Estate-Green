@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Layout from './pages/Layout';
@@ -9,13 +9,14 @@ import NoPage from './pages/NoPage';
 
 
 function App() {
+  const [token, setToken] = useState();
   return (
     <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Index />} />
-            <Route path="login" element={<Login />} />
+            <Route path="login" element={<Login setToken={setToken} />} />
             <Route path="create-account" element={<CreateAccount />} />
             <Route path="*" element={<NoPage />} />
           </Route>
