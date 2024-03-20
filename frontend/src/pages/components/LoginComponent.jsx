@@ -15,8 +15,11 @@ export default function LoginComponent(props) {
                 <div className="flex flex-col items-center justify-center w-full">
                     <h1 className=" mb-6 text-6xl font-bold italic text-center w-full">{props.label}</h1>
                     <form className="flex flex-col w-4/5 items-center" onSubmit={props.handleSubmit}>
-                        <input className={styles.input} name="email" type="text" placeholder="Email" onChange={(event) => props.setEmail(event.target.value)} />
+                        <input className={styles.input} name="username" type="text" placeholder="Username" onChange={(event) => props.setUsername(event.target.value)} />
+                        {props.label === "Create Account" ? <input className={styles.input} name="confirmPassword" type="email" placeholder="Email" onChange={(event) => props.setEmail(event.target.value)} /> : null}
                         <input className={styles.input} name="password" type="password" placeholder="Password" onChange={(event) => props.setPassword(event.target.value)} />
+                        {props.label === "Create Account" ? <input className={styles.input} name="confirmPassword" type="password" placeholder="Confirm Password" onChange={(event) => props.setConfirmPassword(event.target.value)} /> : null}
+                        {props.label === "Create Account" && props.noMatch ? <p className="italic text-red-600">Passwords do not match</p> : null}
                         <button className={styles.button} type="submit">{props.label}</button>
                     </form>
                 </div>

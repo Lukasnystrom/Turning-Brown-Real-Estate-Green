@@ -1,67 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import appartmentsImage from '../assets/appartments.jpg';
+import LoginComponent from "./components/LoginComponent";
 
-export default class CreateAccount extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: '',
-            confirmPassword: '',
-            noMatch: false
-        }
+export default function CreateAccount(props) {
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [noMatch, setNoMatch] = useState(false);
 
+    const navigate = useNavigate(); // Hook to access the navigate function
+
+    async function signupUser(credentials) {
+        return fetch('http://localhost:8000/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to signup');
+                }
+                return response.json();
+            });
     }
 
-    style = {
-        input: "w-2/3 border-black border-2 p-2 m-3 rounded-xl",
-        button: "w-1/3 bg-black text-white p-2 m-2 rounded-md"
-    }
-
-    handleAccountCreation = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('Creating Account');
-        console.log(event.target.email.value);
-        console.log(event.target.password.value);
-        console.log('Account Created');
-    
-    }
-
-    handleDiffrentPassword = (event) => {
-        const {name, value} = event.target;
-        if (value !== this.state.password) {
-            console.log('Passwords do not match');
-            this.setState({noMatch: true});
-        } else {
-            console.log('Passwords match');
-            this.setState({noMatch: false});
+        if (password !== confirmPassword) {
+            setNoMatch(true);
+        } 
+        else {
+            setNoMatch(false);
+            try {
+                const user = await signupUser({
+                    username,
+                    password,
+                    email
+                });
+                props.setUser(user);
+                navigate('/home');
+            }
+            catch (error) {
+                alert(error);
+            }
         }
     }
 
-    handleChange = (event) => {
-        const {name, value} = event.target;
-        this.setState({[name]: value});
-    }
-
-    render() {
-        const {noMatch} = this.state;
-        return (
-            <div className="flex">
-                <div className="w-1/2 h-screen bg-cover bg-center" style={{ backgroundImage: `url(${appartmentsImage})` }}></div>
-                <div className="flex w-1/2 h-screen bg-white place-content-center">
-                    <div className="flex flex-col items-center justify-center w-full">
-                        <h1 className=" mb-6 text-5xl font-bold italic text-center w-full">Create Account</h1>
-                        <form className="flex flex-col w-4/5 items-center" onSubmit={this.handleAccountCreation}>
-                            <input className={this.style.input} name="email" type="email" placeholder="Email" onChange={this.handleChange}/>
-                            <input className={this.style.input} name="password" type="password" placeholder="Password" onChange={this.handleChange}/>
-                            <input className={this.style.input} name="confirmPassword" type="password" placeholder="Confirm Password" onChange={this.handleDiffrentPassword}/>
-                            {noMatch && <div className="text-red-500 italic">Passwords do not match!</div> }
-                            <button className={this.style.input} type="submit">Create Account</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <LoginComponent label={"Create Account"} handleSubmit={handleSubmit} setUsername={setUsername} setEmail={setEmail} setPassword={setPassword} setConfirmPassword={setConfirmPassword} noMatch={noMatch}/>
+        </div>
+    );
 }

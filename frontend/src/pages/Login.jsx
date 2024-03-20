@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import LoginComponent from "./components/LoginComponent";
 
 export default function Login(props) {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate(); // Hook to access the navigate function
 
     async function loginUser(credentials) {
         return fetch('http://localhost:8000/login', {
@@ -14,24 +16,32 @@ export default function Login(props) {
             },
             body: JSON.stringify(credentials)
         })
-            .then(data => data.json());
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to login');
+                }
+                return response.json();
+            });
     }
 
     const handleSubmit = async event => {
         event.preventDefault();
-        const username = email;
-        const token = await loginUser({
-            username,
-            password
-        });
-        console.log(token);
-        props.setToken(token);
-        
+
+        try {
+            const user = await loginUser({
+                username,
+                password
+            });
+            props.setUser(user);
+            navigate('/home');
+        } catch (error) {
+            alert(error);
+        }
     }
 
     return (
         <div>
-            <LoginComponent label={"Login"} setEmail={setEmail} setPassword={setPassword} handleSubmit={handleSubmit} />
+            <LoginComponent label={"Login"} setUsername={setUsername} setPassword={setPassword} handleSubmit={handleSubmit} />
         </div>
     );
 }

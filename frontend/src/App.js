@@ -9,15 +9,15 @@ import NoPage from './pages/NoPage';
 
 
 function App() {
-  const [token, setToken] = useState();
+  const [user, setUser] = useState();
   return (
     <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Index />} />
-            <Route path="login" element={<Login setToken={setToken} />} />
-            <Route path="create-account" element={<CreateAccount />} />
+            <Route path="login" element={<Login setUser={setUser} />} />
+            <Route path="create-account" element={<CreateAccount setUser={setUser} />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>
