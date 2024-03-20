@@ -14,8 +14,8 @@ export default function LoginComponent(props) {
             <div className="flex w-1/2 h-screen bg-white place-content-center">
                 <div className="flex flex-col items-center justify-center w-full">
                     <h1 className=" mb-6 text-6xl font-bold italic text-center w-full">{props.label}</h1>
-                    <form className="flex flex-col w-4/5 items-center" onSubmit={props.handleAccountCreation}>
-                        <input className={styles.input} name="email" type="email" placeholder="Email" onChange={(event) => props.setEmail(event.target.value)} />
+                    <form className="flex flex-col w-4/5 items-center" onSubmit={props.handleSubmit}>
+                        <input className={styles.input} name="email" type="text" placeholder="Email" onChange={(event) => props.setEmail(event.target.value)} />
                         <input className={styles.input} name="password" type="password" placeholder="Password" onChange={(event) => props.setPassword(event.target.value)} />
                         <button className={styles.button} type="submit">{props.label}</button>
                     </form>
